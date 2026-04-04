@@ -83,11 +83,13 @@ pkg_tar(
 
 pkg_deb(
     name = "deb",
-    architecture = select({
-        "@platforms//cpu:arm": "amd64",
-        "@platforms//os:macos": "arm64",
-        "//conditions:default": "all",
-    }),
+    architecture = select(
+        {
+            "@platforms//cpu:aarch64": "arm64",
+            "@platforms//cpu:x86_64": "amd64",
+        },
+        no_match_error = "Unsupported CPU for //:deb. Supported CPUs: aarch64, x86_64.",
+    ),
     data = ":tar",
     description = "Optimal Reciprocal Collision Avoidance for C#",
     homepage = "https://gamma.cs.unc.edu/RVO2/",
