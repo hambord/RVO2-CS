@@ -1154,6 +1154,11 @@ namespace RVO
         {
             ArgumentOutOfRangeException.ThrowIfNegative(radius, nameof(radius));
 
+            if (RVOMath.absSq(point2 - point1) <= RVOMath.RVO_EPSILON * RVOMath.RVO_EPSILON)
+            {
+                return true;
+            }
+
             return kdTree_.queryVisibility(point1, point2, radius);
         }
 
