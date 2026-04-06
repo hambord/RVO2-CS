@@ -84,7 +84,14 @@ namespace RVO
          */
         public static Vector2 normalize(Vector2 vector)
         {
-            return vector / abs(vector);
+            float length = abs(vector);
+
+            if (length <= RVO_EPSILON)
+            {
+                return new Vector2(0.0f, 0.0f);
+            }
+
+            return vector / length;
         }
 
         /**
