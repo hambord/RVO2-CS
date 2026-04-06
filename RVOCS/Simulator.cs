@@ -106,6 +106,7 @@ namespace RVO
         private Worker[] workers_;
         private int numWorkers_;
         private float globalTime_;
+        private bool obstaclesProcessed_;
 
         public static Simulator Instance
         {
@@ -356,6 +357,7 @@ namespace RVO
             kdTree_ = new KdTree();
             obstacles_ = new List<Obstacle>();
             globalTime_ = 0.0f;
+            obstaclesProcessed_ = false;
             timeStep_ = 0.1f;
 
             NumWorkers = 0;
@@ -1112,7 +1114,13 @@ namespace RVO
          */
         public void ProcessObstacles()
         {
+            if (obstaclesProcessed_)
+            {
+                throw new InvalidOperationException("ProcessObstacles has already been called. Call Clear() to reset the simulation before processing obstacles again.");
+            }
+
             kdTree_.buildObstacleTree();
+            obstaclesProcessed_ = true;
         }
 
         /**
