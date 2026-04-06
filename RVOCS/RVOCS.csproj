@@ -36,7 +36,7 @@ United States of America
     <TargetFramework>net10.0</TargetFramework>
     <RootNamespace>RVO</RootNamespace>
     <PackageId>RVOCS</PackageId>
-    <PackageVersion>2.2.0</PackageVersion>
+    <PackageVersion>2.1.0</PackageVersion>
     <Authors>Jur van den Berg, Stephen J. Guy, Jamie Snape, Ming C. Lin, Dinesh Manocha</Authors>
     <Title>RVO2 Library C#</Title>
     <Description>Optimal Reciprocal Collision Avoidance for C#</Description>

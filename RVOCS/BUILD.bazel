@@ -53,7 +53,7 @@ csharp_library(
         "Simulator.cs",
         "Vector2.cs",
     ],
-    target_frameworks = ["net8.0"],
+    target_frameworks = ["net10.0"],
     visibility = ["//visibility:public"],
 )
 
