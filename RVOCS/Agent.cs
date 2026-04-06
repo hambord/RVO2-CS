@@ -495,6 +495,12 @@ namespace RVO
         internal void update()
         {
             velocity_ = newVelocity_;
+
+            if (RVOMath.absSq(velocity_) > maxSpeed_ * maxSpeed_)
+            {
+                velocity_ = RVOMath.normalize(velocity_) * maxSpeed_;
+            }
+
             position_ += velocity_ * Simulator.Instance.timeStep_;
         }
 

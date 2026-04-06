@@ -199,6 +199,12 @@ namespace RVO
          */
         public int AddAgent(Vector2 position, float neighborDist, int maxNeighbors, float timeHorizon, float timeHorizonObst, float radius, float maxSpeed, Vector2 velocity)
         {
+            ArgumentOutOfRangeException.ThrowIfNegative(neighborDist, nameof(neighborDist));
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(timeHorizon, nameof(timeHorizon));
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(timeHorizonObst, nameof(timeHorizonObst));
+            ArgumentOutOfRangeException.ThrowIfNegative(radius, nameof(radius));
+            ArgumentOutOfRangeException.ThrowIfNegative(maxSpeed, nameof(maxSpeed));
+
             Agent agent = new();
             agent.id_ = agents_.Count;
             agent.maxNeighbors_ = maxNeighbors;
@@ -1073,6 +1079,8 @@ namespace RVO
          */
         public bool QueryVisibility(Vector2 point1, Vector2 point2, float radius)
         {
+            ArgumentOutOfRangeException.ThrowIfNegative(radius, nameof(radius));
+
             return kdTree_.queryVisibility(point1, point2, radius);
         }
 
@@ -1130,6 +1138,12 @@ namespace RVO
          */
         public void SetAgentDefaults(float neighborDist, int maxNeighbors, float timeHorizon, float timeHorizonObst, float radius, float maxSpeed, Vector2 velocity)
         {
+            ArgumentOutOfRangeException.ThrowIfNegative(neighborDist, nameof(neighborDist));
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(timeHorizon, nameof(timeHorizon));
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(timeHorizonObst, nameof(timeHorizonObst));
+            ArgumentOutOfRangeException.ThrowIfNegative(radius, nameof(radius));
+            ArgumentOutOfRangeException.ThrowIfNegative(maxSpeed, nameof(maxSpeed));
+
             if (defaultAgent_ == null)
             {
                 defaultAgent_ = new Agent();
@@ -1189,10 +1203,12 @@ namespace RVO
          * <param name="agentNo">The number of the agent whose maximum neighbor
          * count is to be modified.</param>
          * <param name="maxNeighbors">The replacement maximum neighbor count.
-         * </param>
+         * Must be non-negative.</param>
          */
         public void SetAgentMaxNeighbors(int agentNo, int maxNeighbors)
         {
+            ArgumentOutOfRangeException.ThrowIfNegative(maxNeighbors, nameof(maxNeighbors));
+
             agents_[agentNo].maxNeighbors_ = maxNeighbors;
         }
 
@@ -1221,6 +1237,8 @@ namespace RVO
          */
         public void SetAgentMaxSpeed(int agentNo, float maxSpeed)
         {
+            ArgumentOutOfRangeException.ThrowIfNegative(maxSpeed, nameof(maxSpeed));
+
             agents_[agentNo].maxSpeed_ = maxSpeed;
         }
 
@@ -1249,6 +1267,8 @@ namespace RVO
          */
         public void SetAgentNeighborDist(int agentNo, float neighborDist)
         {
+            ArgumentOutOfRangeException.ThrowIfNegative(neighborDist, nameof(neighborDist));
+
             agents_[agentNo].neighborDist_ = neighborDist;
         }
 
@@ -1335,6 +1355,8 @@ namespace RVO
          */
         public void SetAgentRadius(int agentNo, float radius)
         {
+            ArgumentOutOfRangeException.ThrowIfNegative(radius, nameof(radius));
+
             agents_[agentNo].radius_ = radius;
         }
 
@@ -1363,6 +1385,8 @@ namespace RVO
          */
         public void SetAgentTimeHorizon(int agentNo, float timeHorizon)
         {
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(timeHorizon, nameof(timeHorizon));
+
             agents_[agentNo].timeHorizon_ = timeHorizon;
         }
 
@@ -1392,6 +1416,8 @@ namespace RVO
          */
         public void SetAgentTimeHorizonObst(int agentNo, float timeHorizonObst)
         {
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(timeHorizonObst, nameof(timeHorizonObst));
+
             agents_[agentNo].timeHorizonObst_ = timeHorizonObst;
         }
 
