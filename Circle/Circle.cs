@@ -57,13 +57,13 @@ namespace RVO
         void setupScenario()
         {
             /* Specify the global time step of the simulation. */
-            Simulator.Instance.setTimeStep(0.25f);
+            Simulator.Instance.TimeStep = 0.25f;
 
             /*
              * Specify the default parameters for agents that are subsequently
              * added.
              */
-            Simulator.Instance.setAgentDefaults(15.0f, 10, 10.0f, 10.0f, 1.5f, 2.0f, new Vector2(0.0f, 0.0f));
+            Simulator.Instance.SetAgentDefaults(15.0f, 10, 10.0f, 10.0f, 1.5f, 2.0f, new Vector2(0.0f, 0.0f));
 
             /*
              * Add agents, specifying their start position, and store their
@@ -71,10 +71,10 @@ namespace RVO
              */
             for (int i = 0; i < 250; ++i)
             {
-                Simulator.Instance.addAgent(200.0f *
+                Simulator.Instance.AddAgent(200.0f *
                     new Vector2((float)Math.Cos(i * 2.0f * Math.PI / 250.0f),
                         (float)Math.Sin(i * 2.0f * Math.PI / 250.0f)));
-                goals.Add(-Simulator.Instance.getAgentPosition(i));
+                goals.Add(-Simulator.Instance.GetAgentPosition(i));
             }
         }
 
@@ -82,12 +82,12 @@ namespace RVO
         void updateVisualization()
         {
             /* Output the current global time. */
-            Console.Write(Simulator.Instance.getGlobalTime());
+            Console.Write(Simulator.Instance.GlobalTime);
 
             /* Output the current position of all the agents. */
-            for (int i = 0; i < Simulator.Instance.getNumAgents(); ++i)
+            for (int i = 0; i < Simulator.Instance.NumAgents; ++i)
             {
-                Console.Write(" {0}", Simulator.Instance.getAgentPosition(i));
+                Console.Write(" {0}", Simulator.Instance.GetAgentPosition(i));
             }
 
             Console.WriteLine();
@@ -100,25 +100,25 @@ namespace RVO
              * Set the preferred velocity to be a vector of unit magnitude
              * (speed) in the direction of the goal.
              */
-            for (int i = 0; i < Simulator.Instance.getNumAgents(); ++i)
+            for (int i = 0; i < Simulator.Instance.NumAgents; ++i)
             {
-                Vector2 goalVector = goals[i] - Simulator.Instance.getAgentPosition(i);
+                Vector2 goalVector = goals[i] - Simulator.Instance.GetAgentPosition(i);
 
                 if (RVOMath.absSq(goalVector) > 1.0f)
                 {
                     goalVector = RVOMath.normalize(goalVector);
                 }
 
-                Simulator.Instance.setAgentPrefVelocity(i, goalVector);
+                Simulator.Instance.SetAgentPrefVelocity(i, goalVector);
             }
         }
 
         bool reachedGoal()
         {
             /* Check if all agents have reached their goals. */
-            for (int i = 0; i < Simulator.Instance.getNumAgents(); ++i)
+            for (int i = 0; i < Simulator.Instance.NumAgents; ++i)
             {
-                if (RVOMath.absSq(Simulator.Instance.getAgentPosition(i) - goals[i]) > Simulator.Instance.getAgentRadius(i) * Simulator.Instance.getAgentRadius(i))
+                if (RVOMath.absSq(Simulator.Instance.GetAgentPosition(i) - goals[i]) > Simulator.Instance.GetAgentRadius(i) * Simulator.Instance.GetAgentRadius(i))
                 {
                     return false;
                 }
@@ -141,7 +141,7 @@ namespace RVO
                 circle.updateVisualization();
 #endif
                 circle.setPreferredVelocities();
-                Simulator.Instance.doStep();
+                Simulator.Instance.DoStep();
             }
             while (!circle.reachedGoal());
         }

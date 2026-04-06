@@ -91,7 +91,7 @@ namespace RVO
          *
          * <returns>The x-coordinate of the two-dimensional vector.</returns>
          */
-        [Obsolete("Use the X property instead.")]
+        [Obsolete("Use the X property instead.", false)]
         public float x()
         {
             return x_;
@@ -103,7 +103,7 @@ namespace RVO
          *
          * <returns>The y-coordinate of the two-dimensional vector.</returns>
          */
-        [Obsolete("Use the Y property instead.")]
+        [Obsolete("Use the Y property instead.", false)]
         public float y()
         {
             return y_;

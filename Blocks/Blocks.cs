@@ -68,13 +68,13 @@ namespace RVO
         void setupScenario()
         {
             /* Specify the global time step of the simulation. */
-            Simulator.Instance.setTimeStep(0.25f);
+            Simulator.Instance.TimeStep = 0.25f;
 
             /*
              * Specify the default parameters for agents that are subsequently
              * added.
              */
-            Simulator.Instance.setAgentDefaults(15.0f, 10, 5.0f, 5.0f, 2.0f, 2.0f, new Vector2(0.0f, 0.0f));
+            Simulator.Instance.SetAgentDefaults(15.0f, 10, 5.0f, 5.0f, 2.0f, 2.0f, new Vector2(0.0f, 0.0f));
 
             /*
              * Add agents, specifying their start position, and store their
@@ -84,16 +84,16 @@ namespace RVO
             {
                 for (int j = 0; j < 5; ++j)
                 {
-                    Simulator.Instance.addAgent(new Vector2(55.0f + i * 10.0f, 55.0f + j * 10.0f));
+                    Simulator.Instance.AddAgent(new Vector2(55.0f + i * 10.0f, 55.0f + j * 10.0f));
                     goals.Add(new Vector2(-75.0f, -75.0f));
 
-                    Simulator.Instance.addAgent(new Vector2(-55.0f - i * 10.0f, 55.0f + j * 10.0f));
+                    Simulator.Instance.AddAgent(new Vector2(-55.0f - i * 10.0f, 55.0f + j * 10.0f));
                     goals.Add(new Vector2(75.0f, -75.0f));
 
-                    Simulator.Instance.addAgent(new Vector2(55.0f + i * 10.0f, -55.0f - j * 10.0f));
+                    Simulator.Instance.AddAgent(new Vector2(55.0f + i * 10.0f, -55.0f - j * 10.0f));
                     goals.Add(new Vector2(-75.0f, 75.0f));
 
-                    Simulator.Instance.addAgent(new Vector2(-55.0f - i * 10.0f, -55.0f - j * 10.0f));
+                    Simulator.Instance.AddAgent(new Vector2(-55.0f - i * 10.0f, -55.0f - j * 10.0f));
                     goals.Add(new Vector2(75.0f, 75.0f));
                 }
             }
@@ -109,7 +109,7 @@ namespace RVO
                 new Vector2(-40.0f, 10.0f),
                 new Vector2(-10.0f, 10.0f)
             };
-            Simulator.Instance.addObstacle(obstacle1);
+            Simulator.Instance.AddObstacle(obstacle1);
 
             IList<Vector2> obstacle2 = new List<Vector2>
             {
@@ -118,7 +118,7 @@ namespace RVO
                 new Vector2(40.0f, 10.0f),
                 new Vector2(40.0f, 40.0f)
             };
-            Simulator.Instance.addObstacle(obstacle2);
+            Simulator.Instance.AddObstacle(obstacle2);
 
             IList<Vector2> obstacle3 = new List<Vector2>
             {
@@ -127,7 +127,7 @@ namespace RVO
                 new Vector2(40.0f, -10.0f),
                 new Vector2(10.0f, -10.0f)
             };
-            Simulator.Instance.addObstacle(obstacle3);
+            Simulator.Instance.AddObstacle(obstacle3);
 
             IList<Vector2> obstacle4 = new List<Vector2>
             {
@@ -136,25 +136,25 @@ namespace RVO
                 new Vector2(-40.0f, -10.0f),
                 new Vector2(-40.0f, -40.0f)
             };
-            Simulator.Instance.addObstacle(obstacle4);
+            Simulator.Instance.AddObstacle(obstacle4);
 
             /*
              * Process the obstacles so that they are accounted for in the
              * simulation.
              */
-            Simulator.Instance.processObstacles();
+            Simulator.Instance.ProcessObstacles();
         }
 
 #if RVOCS_OUTPUT_TIME_AND_POSITIONS
         void updateVisualization()
         {
             /* Output the current global time. */
-            Console.Write(Simulator.Instance.getGlobalTime());
+            Console.Write(Simulator.Instance.GlobalTime);
 
             /* Output the current position of all the agents. */
-            for (int i = 0; i < Simulator.Instance.getNumAgents(); ++i)
+            for (int i = 0; i < Simulator.Instance.NumAgents; ++i)
             {
-                Console.Write(" {0}", Simulator.Instance.getAgentPosition(i));
+                Console.Write(" {0}", Simulator.Instance.GetAgentPosition(i));
             }
 
             Console.WriteLine();
@@ -167,22 +167,22 @@ namespace RVO
              * Set the preferred velocity to be a vector of unit magnitude
              * (speed) in the direction of the goal.
              */
-            for (int i = 0; i < Simulator.Instance.getNumAgents(); ++i)
+            for (int i = 0; i < Simulator.Instance.NumAgents; ++i)
             {
-                Vector2 goalVector = goals[i] - Simulator.Instance.getAgentPosition(i);
+                Vector2 goalVector = goals[i] - Simulator.Instance.GetAgentPosition(i);
 
                 if (RVOMath.absSq(goalVector) > 1.0f)
                 {
                     goalVector = RVOMath.normalize(goalVector);
                 }
 
-                Simulator.Instance.setAgentPrefVelocity(i, goalVector);
+                Simulator.Instance.SetAgentPrefVelocity(i, goalVector);
 
                 /* Perturb a little to avoid deadlocks due to perfect symmetry. */
                 float angle = (float)random.NextDouble() * 2.0f * (float)Math.PI;
                 float dist = (float)random.NextDouble() * 0.0001f;
 
-                Simulator.Instance.setAgentPrefVelocity(i, Simulator.Instance.getAgentPrefVelocity(i) +
+                Simulator.Instance.SetAgentPrefVelocity(i, Simulator.Instance.GetAgentPrefVelocity(i) +
                     dist * new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle)));
             }
         }
@@ -190,9 +190,9 @@ namespace RVO
         bool reachedGoal()
         {
             /* Check if all agents have reached their goals. */
-            for (int i = 0; i < Simulator.Instance.getNumAgents(); ++i)
+            for (int i = 0; i < Simulator.Instance.NumAgents; ++i)
             {
-                if (RVOMath.absSq(Simulator.Instance.getAgentPosition(i) - goals[i]) > 400.0f)
+                if (RVOMath.absSq(Simulator.Instance.GetAgentPosition(i) - goals[i]) > 400.0f)
                 {
                     return false;
                 }
@@ -215,7 +215,7 @@ namespace RVO
                 blocks.updateVisualization();
 #endif
                 blocks.setPreferredVelocities();
-                Simulator.Instance.doStep();
+                Simulator.Instance.DoStep();
             }
             while (!blocks.reachedGoal());
         }
