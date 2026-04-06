@@ -39,10 +39,10 @@ namespace RVO
     /**
      * <summary>Defines a two-dimensional vector.</summary>
      */
-    public struct Vector2
+    public readonly struct Vector2 : IEquatable<Vector2>
     {
-        internal float x_;
-        internal float y_;
+        internal readonly float x_;
+        internal readonly float y_;
 
         /**
          * <summary>Constructs and initializes a two-dimensional vector from the
@@ -66,7 +66,69 @@ namespace RVO
          */
         public override string ToString()
         {
-            return "(" + x_.ToString(new CultureInfo("").NumberFormat) + "," + y_.ToString(new CultureInfo("").NumberFormat) + ")";
+            return "(" + x_.ToString(CultureInfo.InvariantCulture) + "," + y_.ToString(CultureInfo.InvariantCulture) + ")";
+        }
+
+        /**
+         * <summary>Returns true if this vector equals the specified vector.
+         * </summary>
+         *
+         * <returns>True if this vector equals the specified vector.</returns>
+         *
+         * <param name="other">The vector to compare with this vector.</param>
+         */
+        public bool Equals(Vector2 other)
+        {
+            return x_ == other.x_ && y_ == other.y_;
+        }
+
+        /**
+         * <summary>Returns true if this vector equals the specified object.
+         * </summary>
+         *
+         * <returns>True if this vector equals the specified object.</returns>
+         *
+         * <param name="obj">The object to compare with this vector.</param>
+         */
+        public override bool Equals(object obj)
+        {
+            return obj is Vector2 other && Equals(other);
+        }
+
+        /**
+         * <summary>Returns the hash code for this vector.</summary>
+         *
+         * <returns>The hash code for this vector.</returns>
+         */
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(x_, y_);
+        }
+
+        /**
+         * <summary>Returns true if the two vectors are equal.</summary>
+         *
+         * <returns>True if the two vectors are equal.</returns>
+         *
+         * <param name="left">The first vector.</param>
+         * <param name="right">The second vector.</param>
+         */
+        public static bool operator ==(Vector2 left, Vector2 right)
+        {
+            return left.Equals(right);
+        }
+
+        /**
+         * <summary>Returns true if the two vectors are not equal.</summary>
+         *
+         * <returns>True if the two vectors are not equal.</returns>
+         *
+         * <param name="left">The first vector.</param>
+         * <param name="right">The second vector.</param>
+         */
+        public static bool operator !=(Vector2 left, Vector2 right)
+        {
+            return !left.Equals(right);
         }
 
         /**
