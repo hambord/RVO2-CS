@@ -419,6 +419,11 @@ namespace RVO
          */
         public int GetAgentAgentNeighbor(int agentNo, int neighborNo)
         {
+            ArgumentOutOfRangeException.ThrowIfNegative(agentNo, nameof(agentNo));
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(agentNo, agents_.Count, nameof(agentNo));
+            ArgumentOutOfRangeException.ThrowIfNegative(neighborNo, nameof(neighborNo));
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(neighborNo, agents_[agentNo].agentNeighbors_.Count, nameof(neighborNo));
+
             return agents_[agentNo].agentNeighbors_[neighborNo].Value.id_;
         }
 
@@ -450,6 +455,9 @@ namespace RVO
          */
         public int GetAgentMaxNeighbors(int agentNo)
         {
+            ArgumentOutOfRangeException.ThrowIfNegative(agentNo, nameof(agentNo));
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(agentNo, agents_.Count, nameof(agentNo));
+
             return agents_[agentNo].maxNeighbors_;
         }
 
@@ -478,6 +486,9 @@ namespace RVO
          */
         public float GetAgentMaxSpeed(int agentNo)
         {
+            ArgumentOutOfRangeException.ThrowIfNegative(agentNo, nameof(agentNo));
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(agentNo, agents_.Count, nameof(agentNo));
+
             return agents_[agentNo].maxSpeed_;
         }
 
@@ -507,6 +518,9 @@ namespace RVO
          */
         public float GetAgentNeighborDist(int agentNo)
         {
+            ArgumentOutOfRangeException.ThrowIfNegative(agentNo, nameof(agentNo));
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(agentNo, agents_.Count, nameof(agentNo));
+
             return agents_[agentNo].neighborDist_;
         }
 
@@ -538,6 +552,9 @@ namespace RVO
          */
         public int GetAgentNumAgentNeighbors(int agentNo)
         {
+            ArgumentOutOfRangeException.ThrowIfNegative(agentNo, nameof(agentNo));
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(agentNo, agents_.Count, nameof(agentNo));
+
             return agents_[agentNo].agentNeighbors_.Count;
         }
 
@@ -569,6 +586,9 @@ namespace RVO
          */
         public int GetAgentNumObstacleNeighbors(int agentNo)
         {
+            ArgumentOutOfRangeException.ThrowIfNegative(agentNo, nameof(agentNo));
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(agentNo, agents_.Count, nameof(agentNo));
+
             return agents_[agentNo].obstacleNeighbors_.Count;
         }
 
@@ -602,6 +622,11 @@ namespace RVO
          */
         public int GetAgentObstacleNeighbor(int agentNo, int neighborNo)
         {
+            ArgumentOutOfRangeException.ThrowIfNegative(agentNo, nameof(agentNo));
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(agentNo, agents_.Count, nameof(agentNo));
+            ArgumentOutOfRangeException.ThrowIfNegative(neighborNo, nameof(neighborNo));
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(neighborNo, agents_[agentNo].obstacleNeighbors_.Count, nameof(neighborNo));
+
             return agents_[agentNo].obstacleNeighbors_[neighborNo].Value.id_;
         }
 
@@ -638,6 +663,9 @@ namespace RVO
          */
         public IList<Line> GetAgentOrcaLines(int agentNo)
         {
+            ArgumentOutOfRangeException.ThrowIfNegative(agentNo, nameof(agentNo));
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(agentNo, agents_.Count, nameof(agentNo));
+
             return agents_[agentNo].orcaLines_;
         }
 
@@ -672,6 +700,9 @@ namespace RVO
          */
         public Vector2 GetAgentPosition(int agentNo)
         {
+            ArgumentOutOfRangeException.ThrowIfNegative(agentNo, nameof(agentNo));
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(agentNo, agents_.Count, nameof(agentNo));
+
             return agents_[agentNo].position_;
         }
 
@@ -703,6 +734,9 @@ namespace RVO
          */
         public Vector2 GetAgentPrefVelocity(int agentNo)
         {
+            ArgumentOutOfRangeException.ThrowIfNegative(agentNo, nameof(agentNo));
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(agentNo, agents_.Count, nameof(agentNo));
+
             return agents_[agentNo].prefVelocity_;
         }
 
@@ -732,6 +766,9 @@ namespace RVO
          */
         public float GetAgentRadius(int agentNo)
         {
+            ArgumentOutOfRangeException.ThrowIfNegative(agentNo, nameof(agentNo));
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(agentNo, agents_.Count, nameof(agentNo));
+
             return agents_[agentNo].radius_;
         }
 
@@ -759,6 +796,9 @@ namespace RVO
          */
         public float GetAgentTimeHorizon(int agentNo)
         {
+            ArgumentOutOfRangeException.ThrowIfNegative(agentNo, nameof(agentNo));
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(agentNo, agents_.Count, nameof(agentNo));
+
             return agents_[agentNo].timeHorizon_;
         }
 
@@ -788,6 +828,9 @@ namespace RVO
          */
         public float GetAgentTimeHorizonObst(int agentNo)
         {
+            ArgumentOutOfRangeException.ThrowIfNegative(agentNo, nameof(agentNo));
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(agentNo, agents_.Count, nameof(agentNo));
+
             return agents_[agentNo].timeHorizonObst_;
         }
 
@@ -819,6 +862,9 @@ namespace RVO
          */
         public Vector2 GetAgentVelocity(int agentNo)
         {
+            ArgumentOutOfRangeException.ThrowIfNegative(agentNo, nameof(agentNo));
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(agentNo, agents_.Count, nameof(agentNo));
+
             return agents_[agentNo].velocity_;
         }
 
@@ -930,6 +976,9 @@ namespace RVO
          */
         public Vector2 GetObstacleVertex(int vertexNo)
         {
+            ArgumentOutOfRangeException.ThrowIfNegative(vertexNo, nameof(vertexNo));
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(vertexNo, obstacles_.Count, nameof(vertexNo));
+
             return obstacles_[vertexNo].point_;
         }
 
@@ -961,6 +1010,9 @@ namespace RVO
          */
         public int GetNextObstacleVertexNo(int vertexNo)
         {
+            ArgumentOutOfRangeException.ThrowIfNegative(vertexNo, nameof(vertexNo));
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(vertexNo, obstacles_.Count, nameof(vertexNo));
+
             return obstacles_[vertexNo].next_.id_;
         }
 
@@ -992,6 +1044,9 @@ namespace RVO
          */
         public int GetPrevObstacleVertexNo(int vertexNo)
         {
+            ArgumentOutOfRangeException.ThrowIfNegative(vertexNo, nameof(vertexNo));
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(vertexNo, obstacles_.Count, nameof(vertexNo));
+
             return obstacles_[vertexNo].previous_.id_;
         }
 
@@ -1207,6 +1262,8 @@ namespace RVO
          */
         public void SetAgentMaxNeighbors(int agentNo, int maxNeighbors)
         {
+            ArgumentOutOfRangeException.ThrowIfNegative(agentNo, nameof(agentNo));
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(agentNo, agents_.Count, nameof(agentNo));
             ArgumentOutOfRangeException.ThrowIfNegative(maxNeighbors, nameof(maxNeighbors));
 
             agents_[agentNo].maxNeighbors_ = maxNeighbors;
@@ -1237,6 +1294,8 @@ namespace RVO
          */
         public void SetAgentMaxSpeed(int agentNo, float maxSpeed)
         {
+            ArgumentOutOfRangeException.ThrowIfNegative(agentNo, nameof(agentNo));
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(agentNo, agents_.Count, nameof(agentNo));
             ArgumentOutOfRangeException.ThrowIfNegative(maxSpeed, nameof(maxSpeed));
 
             agents_[agentNo].maxSpeed_ = maxSpeed;
@@ -1267,6 +1326,8 @@ namespace RVO
          */
         public void SetAgentNeighborDist(int agentNo, float neighborDist)
         {
+            ArgumentOutOfRangeException.ThrowIfNegative(agentNo, nameof(agentNo));
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(agentNo, agents_.Count, nameof(agentNo));
             ArgumentOutOfRangeException.ThrowIfNegative(neighborDist, nameof(neighborDist));
 
             agents_[agentNo].neighborDist_ = neighborDist;
@@ -1298,6 +1359,9 @@ namespace RVO
          */
         public void SetAgentPosition(int agentNo, Vector2 position)
         {
+            ArgumentOutOfRangeException.ThrowIfNegative(agentNo, nameof(agentNo));
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(agentNo, agents_.Count, nameof(agentNo));
+
             agents_[agentNo].position_ = position;
         }
 
@@ -1327,6 +1391,9 @@ namespace RVO
          */
         public void SetAgentPrefVelocity(int agentNo, Vector2 prefVelocity)
         {
+            ArgumentOutOfRangeException.ThrowIfNegative(agentNo, nameof(agentNo));
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(agentNo, agents_.Count, nameof(agentNo));
+
             agents_[agentNo].prefVelocity_ = prefVelocity;
         }
 
@@ -1355,6 +1422,8 @@ namespace RVO
          */
         public void SetAgentRadius(int agentNo, float radius)
         {
+            ArgumentOutOfRangeException.ThrowIfNegative(agentNo, nameof(agentNo));
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(agentNo, agents_.Count, nameof(agentNo));
             ArgumentOutOfRangeException.ThrowIfNegative(radius, nameof(radius));
 
             agents_[agentNo].radius_ = radius;
@@ -1385,6 +1454,8 @@ namespace RVO
          */
         public void SetAgentTimeHorizon(int agentNo, float timeHorizon)
         {
+            ArgumentOutOfRangeException.ThrowIfNegative(agentNo, nameof(agentNo));
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(agentNo, agents_.Count, nameof(agentNo));
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(timeHorizon, nameof(timeHorizon));
 
             agents_[agentNo].timeHorizon_ = timeHorizon;
@@ -1416,6 +1487,8 @@ namespace RVO
          */
         public void SetAgentTimeHorizonObst(int agentNo, float timeHorizonObst)
         {
+            ArgumentOutOfRangeException.ThrowIfNegative(agentNo, nameof(agentNo));
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(agentNo, agents_.Count, nameof(agentNo));
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(timeHorizonObst, nameof(timeHorizonObst));
 
             agents_[agentNo].timeHorizonObst_ = timeHorizonObst;
@@ -1447,6 +1520,9 @@ namespace RVO
          */
         public void SetAgentVelocity(int agentNo, Vector2 velocity)
         {
+            ArgumentOutOfRangeException.ThrowIfNegative(agentNo, nameof(agentNo));
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(agentNo, agents_.Count, nameof(agentNo));
+
             agents_[agentNo].velocity_ = velocity;
         }
 
