@@ -70,11 +70,28 @@ namespace RVO
         }
 
         /**
+         * <summary>Gets the x-coordinate of this two-dimensional vector.
+         * </summary>
+         *
+         * <value>The x-coordinate of the two-dimensional vector.</value>
+         */
+        public float X => x_;
+
+        /**
+         * <summary>Gets the y-coordinate of this two-dimensional vector.
+         * </summary>
+         *
+         * <value>The y-coordinate of the two-dimensional vector.</value>
+         */
+        public float Y => y_;
+
+        /**
          * <summary>Returns the x-coordinate of this two-dimensional vector.
          * </summary>
          *
          * <returns>The x-coordinate of the two-dimensional vector.</returns>
          */
+        [Obsolete("Use the X property instead.")]
         public float x()
         {
             return x_;
@@ -86,6 +103,7 @@ namespace RVO
          *
          * <returns>The y-coordinate of the two-dimensional vector.</returns>
          */
+        [Obsolete("Use the Y property instead.")]
         public float y()
         {
             return y_;
