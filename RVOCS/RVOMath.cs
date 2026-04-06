@@ -127,7 +127,15 @@ namespace RVO
          */
         internal static float distSqPointLineSegment(Vector2 vector1, Vector2 vector2, Vector2 vector3)
         {
-            float r = ((vector3 - vector1) * (vector2 - vector1)) / absSq(vector2 - vector1);
+            float lengthSq = absSq(vector2 - vector1);
+
+            if (lengthSq <= RVO_EPSILON * RVO_EPSILON)
+            {
+                /* Degenerate segment: both endpoints are the same point. */
+                return absSq(vector3 - vector1);
+            }
+
+            float r = ((vector3 - vector1) * (vector2 - vector1)) / lengthSq;
 
             if (r < 0.0f)
             {
