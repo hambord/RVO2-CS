@@ -280,6 +280,16 @@ namespace RVO
                 return -1;
             }
 
+            for (int i = 0; i < vertices.Count; ++i)
+            {
+                int next = i == vertices.Count - 1 ? 0 : i + 1;
+
+                if (RVOMath.absSq(vertices[next] - vertices[i]) <= RVOMath.RVO_EPSILON * RVOMath.RVO_EPSILON)
+                {
+                    return -1;
+                }
+            }
+
             int obstacleNo = obstacles_.Count;
 
             for (int i = 0; i < vertices.Count; ++i)
