@@ -301,15 +301,15 @@ namespace RVO
         {
             ParallelOptions options = new() { MaxDegreeOfParallelism = _numWorkers };
 
-            _kdTree.buildAgentTree();
+            _kdTree.BuildAgentTree();
 
             Parallel.For(0, _agents.Count, options, i =>
             {
-                _agents[i].computeNeighbors();
-                _agents[i].computeNewVelocity();
+                _agents[i].ComputeNeighbors();
+                _agents[i].ComputeNewVelocity();
             });
 
-            Parallel.For(0, _agents.Count, options, i => _agents[i].update());
+            Parallel.For(0, _agents.Count, options, i => _agents[i].Update());
 
             _globalTime += _timeStep;
 
@@ -930,7 +930,7 @@ namespace RVO
                 throw new InvalidOperationException("ProcessObstacles has already been called. Call Clear() to reset the simulation before processing obstacles again.");
             }
 
-            _kdTree.buildObstacleTree();
+            _kdTree.BuildObstacleTree();
             _obstaclesProcessed = true;
         }
 
@@ -966,7 +966,7 @@ namespace RVO
                 return true;
             }
 
-            return _kdTree.queryVisibility(point1, point2, radius);
+            return _kdTree.QueryVisibility(point1, point2, radius);
         }
 
         /// <summary>Performs a visibility query between the two specified points

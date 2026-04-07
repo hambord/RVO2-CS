@@ -56,24 +56,24 @@ namespace RVO
         private Vector2 _newVelocity;
 
         /// <summary>Computes the neighbors of this agent.</summary>
-        internal void computeNeighbors()
+        internal void ComputeNeighbors()
         {
             _obstacleNeighbors.Clear();
             float range = _timeHorizonObst * _maxSpeed + _radius;
             float rangeSq = range * range;
-            Simulator.Instance._kdTree.computeObstacleNeighbors(this, rangeSq);
+            Simulator.Instance._kdTree.ComputeObstacleNeighbors(this, rangeSq);
 
             _agentNeighbors.Clear();
 
             if (_maxNeighbors > 0)
             {
                 rangeSq = _neighborDist * _neighborDist;
-                Simulator.Instance._kdTree.computeAgentNeighbors(this, ref rangeSq);
+                Simulator.Instance._kdTree.ComputeAgentNeighbors(this, ref rangeSq);
             }
         }
 
         /// <summary>Computes the new velocity of this agent.</summary>
-        internal void computeNewVelocity()
+        internal void ComputeNewVelocity()
         {
             _orcaLines.Clear();
 
@@ -408,11 +408,11 @@ namespace RVO
                 _orcaLines.Add(line);
             }
 
-            int lineFail = linearProgram2(_orcaLines, _maxSpeed, _prefVelocity, false, ref _newVelocity);
+            int lineFail = LinearProgram2(_orcaLines, _maxSpeed, _prefVelocity, false, ref _newVelocity);
 
             if (lineFail < _orcaLines.Count)
             {
-                linearProgram3(_orcaLines, numObstLines, lineFail, _maxSpeed, ref _newVelocity);
+                LinearProgram3(_orcaLines, numObstLines, lineFail, _maxSpeed, ref _newVelocity);
             }
         }
 
@@ -421,7 +421,7 @@ namespace RVO
         ///
         /// <param name="agent">A pointer to the agent to be inserted.</param>
         /// <param name="rangeSq">The squared range around this agent.</param>
-        internal void insertAgentNeighbor(Agent agent, ref float rangeSq)
+        internal void InsertAgentNeighbor(Agent agent, ref float rangeSq)
         {
             if (this != agent)
             {
@@ -458,7 +458,7 @@ namespace RVO
         /// <param name="obstacle">The number of the static obstacle to be
         /// inserted.</param>
         /// <param name="rangeSq">The squared range around this agent.</param>
-        internal void insertObstacleNeighbor(Obstacle obstacle, float rangeSq)
+        internal void InsertObstacleNeighbor(Obstacle obstacle, float rangeSq)
         {
             Obstacle nextObstacle = obstacle._next;
 
@@ -481,7 +481,7 @@ namespace RVO
 
         /// <summary>Updates the two-dimensional position and two-dimensional
         /// velocity of this agent.</summary>
-        internal void update()
+        internal void Update()
         {
             _velocity = _newVelocity;
 
@@ -507,7 +507,7 @@ namespace RVO
         /// </param>
         /// <param name="result">A reference to the result of the linear program.
         /// </param>
-        private bool linearProgram1(IList<Line> lines, int lineNo, float radius, Vector2 optVelocity, bool directionOpt, ref Vector2 result)
+        private bool LinearProgram1(IList<Line> lines, int lineNo, float radius, Vector2 optVelocity, bool directionOpt, ref Vector2 result)
         {
             float dotProduct = lines[lineNo].point * lines[lineNo].direction;
             float discriminant = dotProduct * dotProduct + radius * radius - RVOMath.AbsSq(lines[lineNo].point);
@@ -606,7 +606,7 @@ namespace RVO
         /// </param>
         /// <param name="result">A reference to the result of the linear program.
         /// </param>
-        private int linearProgram2(IList<Line> lines, float radius, Vector2 optVelocity, bool directionOpt, ref Vector2 result)
+        private int LinearProgram2(IList<Line> lines, float radius, Vector2 optVelocity, bool directionOpt, ref Vector2 result)
         {
             if (directionOpt)
             {
@@ -633,7 +633,7 @@ namespace RVO
                 {
                     /* Result does not satisfy constraint i. Compute new optimal result. */
                     Vector2 tempResult = result;
-                    if (!linearProgram1(lines, i, radius, optVelocity, directionOpt, ref result))
+                    if (!LinearProgram1(lines, i, radius, optVelocity, directionOpt, ref result))
                     {
                         result = tempResult;
 
@@ -655,7 +655,7 @@ namespace RVO
         /// <param name="radius">The radius of the circular constraint.</param>
         /// <param name="result">A reference to the result of the linear program.
         /// </param>
-        private void linearProgram3(IList<Line> lines, int numObstLines, int beginLine, float radius, ref Vector2 result)
+        private void LinearProgram3(IList<Line> lines, int numObstLines, int beginLine, float radius, ref Vector2 result)
         {
             float distance = 0.0f;
 
@@ -700,7 +700,7 @@ namespace RVO
                     }
 
                     Vector2 tempResult = result;
-                    if (linearProgram2(projLines, radius, new Vector2(-lines[i].direction.Y, lines[i].direction.X), true, ref result) < projLines.Count)
+                    if (LinearProgram2(projLines, radius, new Vector2(-lines[i].direction.Y, lines[i].direction.X), true, ref result) < projLines.Count)
                     {
                         /*
                          * This should in principle not happen. The result is by
