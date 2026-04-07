@@ -285,7 +285,7 @@ namespace RVO
             {
                 int next = i == vertices.Count - 1 ? 0 : i + 1;
 
-                if (RVOMath.absSq(vertices[next] - vertices[i]) <= RVOMath.RVO_EPSILON * RVOMath.RVO_EPSILON)
+                if (RVOMath.AbsSq(vertices[next] - vertices[i]) <= RVOMath.RVO_EPSILON * RVOMath.RVO_EPSILON)
                 {
                     return -1;
                 }
@@ -310,7 +310,7 @@ namespace RVO
                     obstacle.next_.previous_ = obstacle;
                 }
 
-                obstacle.direction_ = RVOMath.normalize(vertices[(i == vertices.Count - 1 ? 0 : i + 1)] - vertices[i]);
+                obstacle.direction_ = RVOMath.Normalize(vertices[(i == vertices.Count - 1 ? 0 : i + 1)] - vertices[i]);
 
                 if (vertices.Count == 2)
                 {
@@ -318,7 +318,7 @@ namespace RVO
                 }
                 else
                 {
-                    obstacle.convex_ = (RVOMath.leftOf(vertices[(i == 0 ? vertices.Count - 1 : i - 1)], vertices[i], vertices[(i == vertices.Count - 1 ? 0 : i + 1)]) >= 0.0f);
+                    obstacle.convex_ = (RVOMath.LeftOf(vertices[(i == 0 ? vertices.Count - 1 : i - 1)], vertices[i], vertices[(i == vertices.Count - 1 ? 0 : i + 1)]) >= 0.0f);
                 }
 
                 obstacle.id_ = obstacles_.Count;
@@ -1154,7 +1154,7 @@ namespace RVO
         {
             ArgumentOutOfRangeException.ThrowIfNegative(radius, nameof(radius));
 
-            if (RVOMath.absSq(point2 - point1) <= RVOMath.RVO_EPSILON * RVOMath.RVO_EPSILON)
+            if (RVOMath.AbsSq(point2 - point1) <= RVOMath.RVO_EPSILON * RVOMath.RVO_EPSILON)
             {
                 return true;
             }

@@ -54,9 +54,9 @@ namespace RVO
          * computed.</param>
          * <returns>The length of the two-dimensional vector.</returns>
          */
-        public static float abs(Vector2 vector)
+        public static float Abs(Vector2 vector)
         {
-            return sqrt(absSq(vector));
+            return MathF.Sqrt(AbsSq(vector));
         }
 
         /**
@@ -68,7 +68,7 @@ namespace RVO
          * <param name="vector">The two-dimensional vector whose squared length
          * is to be computed.</param>
          */
-        public static float absSq(Vector2 vector)
+        public static float AbsSq(Vector2 vector)
         {
             return vector * vector;
         }
@@ -82,9 +82,9 @@ namespace RVO
          * <param name="vector">The two-dimensional vector whose normalization
          * is to be computed.</param>
          */
-        public static Vector2 normalize(Vector2 vector)
+        public static Vector2 Normalize(Vector2 vector)
         {
-            float length = abs(vector);
+            float length = Abs(vector);
 
             if (length <= RVO_EPSILON)
             {
@@ -107,7 +107,7 @@ namespace RVO
          * <param name="vector2">The bottom row of the two-dimensional square
          * matrix.</param>
          */
-        internal static float det(Vector2 vector1, Vector2 vector2)
+        internal static float Det(Vector2 vector1, Vector2 vector2)
         {
             return vector1.x_ * vector2.y_ - vector1.y_ * vector2.x_;
         }
@@ -125,42 +125,29 @@ namespace RVO
          * <param name="vector3">The point to which the squared distance is to
          * be calculated.</param>
          */
-        internal static float distSqPointLineSegment(Vector2 vector1, Vector2 vector2, Vector2 vector3)
+        internal static float DistSqPointLineSegment(Vector2 vector1, Vector2 vector2, Vector2 vector3)
         {
-            float lengthSq = absSq(vector2 - vector1);
+            float lengthSq = AbsSq(vector2 - vector1);
 
             if (lengthSq <= RVO_EPSILON * RVO_EPSILON)
             {
                 /* Degenerate segment: both endpoints are the same point. */
-                return absSq(vector3 - vector1);
+                return AbsSq(vector3 - vector1);
             }
 
             float r = ((vector3 - vector1) * (vector2 - vector1)) / lengthSq;
 
             if (r < 0.0f)
             {
-                return absSq(vector3 - vector1);
+                return AbsSq(vector3 - vector1);
             }
 
             if (r > 1.0f)
             {
-                return absSq(vector3 - vector2);
+                return AbsSq(vector3 - vector2);
             }
 
-            return absSq(vector3 - (vector1 + r * (vector2 - vector1)));
-        }
-
-        /**
-         * <summary>Computes the absolute value of a float.</summary>
-         *
-         * <returns>The absolute value of the float.</returns>
-         *
-         * <param name="scalar">The float of which to compute the absolute
-         * value.</param>
-         */
-        internal static float fabs(float scalar)
-        {
-            return Math.Abs(scalar);
+            return AbsSq(vector3 - (vector1 + r * (vector2 - vector1)));
         }
 
         /**
@@ -175,34 +162,9 @@ namespace RVO
          * <param name="c">The point to which the signed distance is to be
          * calculated.</param>
          */
-        internal static float leftOf(Vector2 a, Vector2 b, Vector2 c)
+        internal static float LeftOf(Vector2 a, Vector2 b, Vector2 c)
         {
-            return det(a - c, b - a);
-        }
-
-        /**
-         * <summary>Computes the square of a float.</summary>
-         *
-         * <returns>The square of the float.</returns>
-         *
-         * <param name="scalar">The float to be squared.</param>
-         */
-        internal static float sqr(float scalar)
-        {
-            return scalar * scalar;
-        }
-
-        /**
-         * <summary>Computes the square root of a float.</summary>
-         *
-         * <returns>The square root of the float.</returns>
-         *
-         * <param name="scalar">The float of which to compute the square root.
-         * </param>
-         */
-        internal static float sqrt(float scalar)
-        {
-            return (float)Math.Sqrt(scalar);
+            return Det(a - c, b - a);
         }
     }
 }
