@@ -33,9 +33,7 @@
 
 namespace RVO
 {
-    /**
-     * <summary>Defines static obstacles in the simulation.</summary>
-     */
+    /// <summary>Defines static obstacles in the simulation.</summary>
     internal class Obstacle
     {
 

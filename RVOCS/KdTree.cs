@@ -36,15 +36,11 @@ using System.Collections.Generic;
 
 namespace RVO
 {
-    /**
-     * <summary>Defines k-D trees for agents and static obstacles in the
-     * simulation.</summary>
-     */
+    /// <summary>Defines k-D trees for agents and static obstacles in the
+    /// simulation.</summary>
     internal class KdTree
     {
-        /**
-         * <summary>Defines a node of an agent k-D tree.</summary>
-         */
+        /// <summary>Defines a node of an agent k-D tree.</summary>
         private struct AgentTreeNode
         {
             internal int _begin;
@@ -57,92 +53,78 @@ namespace RVO
             internal float _minY;
         }
 
-        /**
-         * <summary>Defines a pair of scalar values.</summary>
-         */
+        /// <summary>Defines a pair of scalar values.</summary>
         private struct FloatPair
         {
             private readonly float _a;
             private readonly float _b;
 
-            /**
-             * <summary>Constructs and initializes a pair of scalar
-             * values.</summary>
-             *
-             * <param name="a">The first scalar value.</param>
-             * <param name="b">The second scalar value.</param>
-             */
+            /// <summary>Constructs and initializes a pair of scalar
+            /// values.</summary>
+            ///
+            /// <param name="a">The first scalar value.</param>
+            /// <param name="b">The second scalar value.</param>
             internal FloatPair(float a, float b)
             {
                 _a = a;
                 _b = b;
             }
 
-            /**
-             * <summary>Returns true if the first pair of scalar values is less
-             * than the second pair of scalar values.</summary>
-             *
-             * <returns>True if the first pair of scalar values is less than the
-             * second pair of scalar values.</returns>
-             *
-             * <param name="pair1">The first pair of scalar values.</param>
-             * <param name="pair2">The second pair of scalar values.</param>
-             */
+            /// <summary>Returns true if the first pair of scalar values is less
+            /// than the second pair of scalar values.</summary>
+            ///
+            /// <returns>True if the first pair of scalar values is less than the
+            /// second pair of scalar values.</returns>
+            ///
+            /// <param name="pair1">The first pair of scalar values.</param>
+            /// <param name="pair2">The second pair of scalar values.</param>
             public static bool operator <(FloatPair pair1, FloatPair pair2)
             {
                 return pair1._a < pair2._a || pair1._a == pair2._a && pair1._b < pair2._b;
             }
 
-            /**
-             * <summary>Returns true if the first pair of scalar values is less
-             * than or equal to the second pair of scalar values.</summary>
-             *
-             * <returns>True if the first pair of scalar values is less than or
-             * equal to the second pair of scalar values.</returns>
-             *
-             * <param name="pair1">The first pair of scalar values.</param>
-             * <param name="pair2">The second pair of scalar values.</param>
-             */
+            /// <summary>Returns true if the first pair of scalar values is less
+            /// than or equal to the second pair of scalar values.</summary>
+            ///
+            /// <returns>True if the first pair of scalar values is less than or
+            /// equal to the second pair of scalar values.</returns>
+            ///
+            /// <param name="pair1">The first pair of scalar values.</param>
+            /// <param name="pair2">The second pair of scalar values.</param>
             public static bool operator <=(FloatPair pair1, FloatPair pair2)
             {
                 return (pair1._a == pair2._a && pair1._b == pair2._b) || pair1 < pair2;
             }
 
-            /**
-             * <summary>Returns true if the first pair of scalar values is
-             * greater than the second pair of scalar values.</summary>
-             *
-             * <returns>True if the first pair of scalar values is greater than
-             * the second pair of scalar values.</returns>
-             *
-             * <param name="pair1">The first pair of scalar values.</param>
-             * <param name="pair2">The second pair of scalar values.</param>
-             */
+            /// <summary>Returns true if the first pair of scalar values is
+            /// greater than the second pair of scalar values.</summary>
+            ///
+            /// <returns>True if the first pair of scalar values is greater than
+            /// the second pair of scalar values.</returns>
+            ///
+            /// <param name="pair1">The first pair of scalar values.</param>
+            /// <param name="pair2">The second pair of scalar values.</param>
             public static bool operator >(FloatPair pair1, FloatPair pair2)
             {
                 return !(pair1 <= pair2);
             }
 
-            /**
-             * <summary>Returns true if the first pair of scalar values is
-             * greater than or equal to the second pair of scalar values.
-             * </summary>
-             *
-             * <returns>True if the first pair of scalar values is greater than
-             * or equal to the second pair of scalar values.</returns>
-             *
-             * <param name="pair1">The first pair of scalar values.</param>
-             * <param name="pair2">The second pair of scalar values.</param>
-             */
+            /// <summary>Returns true if the first pair of scalar values is
+            /// greater than or equal to the second pair of scalar values.
+            /// </summary>
+            ///
+            /// <returns>True if the first pair of scalar values is greater than
+            /// or equal to the second pair of scalar values.</returns>
+            ///
+            /// <param name="pair1">The first pair of scalar values.</param>
+            /// <param name="pair2">The second pair of scalar values.</param>
             public static bool operator >=(FloatPair pair1, FloatPair pair2)
             {
                 return !(pair1 < pair2);
             }
         }
 
-        /**
-         * <summary>Defines a node of an obstacle k-D tree.</summary>
-         */
+        /// <summary>Defines a node of an obstacle k-D tree.</summary>
         private class ObstacleTreeNode
         {
             internal Obstacle _obstacle;
@@ -150,9 +132,7 @@ namespace RVO
             internal ObstacleTreeNode _right;
         };
 
-        /**
-         * <summary>The maximum size of an agent k-D tree leaf.</summary>
-         */
+        /// <summary>The maximum size of an agent k-D tree leaf.</summary>
         /* Empirically chosen; balances tree depth against per-leaf work. */
         private const int MAX_LEAF_SIZE = 10;
 
@@ -160,9 +140,7 @@ namespace RVO
         private AgentTreeNode[] _agentTree;
         private ObstacleTreeNode _obstacleTree;
 
-        /**
-         * <summary>Builds an agent k-D tree.</summary>
-         */
+        /// <summary>Builds an agent k-D tree.</summary>
         internal void buildAgentTree()
         {
             if (_agents == null || _agents.Length != Simulator.Instance._agents.Count)
@@ -188,9 +166,7 @@ namespace RVO
             }
         }
 
-        /**
-         * <summary>Builds an obstacle k-D tree.</summary>
-         */
+        /// <summary>Builds an obstacle k-D tree.</summary>
         internal void buildObstacleTree()
         {
             _obstacleTree = new ObstacleTreeNode();
@@ -205,59 +181,51 @@ namespace RVO
             _obstacleTree = buildObstacleTreeRecursive(obstacles);
         }
 
-        /**
-         * <summary>Computes the agent neighbors of the specified agent.
-         * </summary>
-         *
-         * <param name="agent">The agent for which agent neighbors are to be
-         * computed.</param>
-         * <param name="rangeSq">The squared range around the agent.</param>
-         */
+        /// <summary>Computes the agent neighbors of the specified agent.
+        /// </summary>
+        ///
+        /// <param name="agent">The agent for which agent neighbors are to be
+        /// computed.</param>
+        /// <param name="rangeSq">The squared range around the agent.</param>
         internal void computeAgentNeighbors(Agent agent, ref float rangeSq)
         {
             queryAgentTreeRecursive(agent, ref rangeSq, 0);
         }
 
-        /**
-         * <summary>Computes the obstacle neighbors of the specified agent.
-         * </summary>
-         *
-         * <param name="agent">The agent for which obstacle neighbors are to be
-         * computed.</param>
-         * <param name="rangeSq">The squared range around the agent.</param>
-         */
+        /// <summary>Computes the obstacle neighbors of the specified agent.
+        /// </summary>
+        ///
+        /// <param name="agent">The agent for which obstacle neighbors are to be
+        /// computed.</param>
+        /// <param name="rangeSq">The squared range around the agent.</param>
         internal void computeObstacleNeighbors(Agent agent, float rangeSq)
         {
             queryObstacleTreeRecursive(agent, rangeSq, _obstacleTree);
         }
 
-        /**
-         * <summary>Queries the visibility between two points within a specified
-         * radius.</summary>
-         *
-         * <returns>True if q1 and q2 are mutually visible within the radius;
-         * false otherwise.</returns>
-         *
-         * <param name="q1">The first point between which visibility is to be
-         * tested.</param>
-         * <param name="q2">The second point between which visibility is to be
-         * tested.</param>
-         * <param name="radius">The radius within which visibility is to be
-         * tested.</param>
-         */
+        /// <summary>Queries the visibility between two points within a specified
+        /// radius.</summary>
+        ///
+        /// <returns>True if q1 and q2 are mutually visible within the radius;
+        /// false otherwise.</returns>
+        ///
+        /// <param name="q1">The first point between which visibility is to be
+        /// tested.</param>
+        /// <param name="q2">The second point between which visibility is to be
+        /// tested.</param>
+        /// <param name="radius">The radius within which visibility is to be
+        /// tested.</param>
         internal bool queryVisibility(Vector2 q1, Vector2 q2, float radius)
         {
             return queryVisibilityRecursive(q1, q2, radius, _obstacleTree);
         }
 
-        /**
-         * <summary>Recursive method for building an agent k-D tree.</summary>
-         *
-         * <param name="begin">The beginning agent k-D tree node node index.
-         * </param>
-         * <param name="end">The ending agent k-D tree node index.</param>
-         * <param name="node">The current agent k-D tree node index.</param>
-         */
+        /// <summary>Recursive method for building an agent k-D tree.</summary>
+        ///
+        /// <param name="begin">The beginning agent k-D tree node node index.
+        /// </param>
+        /// <param name="end">The ending agent k-D tree node index.</param>
+        /// <param name="node">The current agent k-D tree node index.</param>
         private void buildAgentTreeRecursive(int begin, int end, int node)
         {
             _agentTree[node]._begin = begin;
@@ -320,14 +288,12 @@ namespace RVO
             }
         }
 
-        /**
-         * <summary>Recursive method for building an obstacle k-D tree.
-         * </summary>
-         *
-         * <returns>An obstacle k-D tree node.</returns>
-         *
-         * <param name="obstacles">A list of obstacles.</param>
-         */
+        /// <summary>Recursive method for building an obstacle k-D tree.
+        /// </summary>
+        ///
+        /// <returns>An obstacle k-D tree node.</returns>
+        ///
+        /// <param name="obstacles">A list of obstacles.</param>
         private ObstacleTreeNode buildObstacleTreeRecursive(IList<Obstacle> obstacles)
         {
             if (obstacles.Count == 0)
@@ -477,15 +443,13 @@ namespace RVO
             }
         }
 
-        /**
-         * <summary>Recursive method for computing the agent neighbors of the
-         * specified agent.</summary>
-         *
-         * <param name="agent">The agent for which agent neighbors are to be
-         * computed.</param>
-         * <param name="rangeSq">The squared range around the agent.</param>
-         * <param name="node">The current agent k-D tree node index.</param>
-         */
+        /// <summary>Recursive method for computing the agent neighbors of the
+        /// specified agent.</summary>
+        ///
+        /// <param name="agent">The agent for which agent neighbors are to be
+        /// computed.</param>
+        /// <param name="rangeSq">The squared range around the agent.</param>
+        /// <param name="node">The current agent k-D tree node index.</param>
         private void queryAgentTreeRecursive(Agent agent, ref float rangeSq, int node)
         {
             if (_agentTree[node]._end - _agentTree[node]._begin <= MAX_LEAF_SIZE)
@@ -535,15 +499,13 @@ namespace RVO
             }
         }
 
-        /**
-         * <summary>Recursive method for computing the obstacle neighbors of the
-         * specified agent.</summary>
-         *
-         * <param name="agent">The agent for which obstacle neighbors are to be
-         * computed.</param>
-         * <param name="rangeSq">The squared range around the agent.</param>
-         * <param name="node">The current obstacle k-D node.</param>
-         */
+        /// <summary>Recursive method for computing the obstacle neighbors of the
+        /// specified agent.</summary>
+        ///
+        /// <param name="agent">The agent for which obstacle neighbors are to be
+        /// computed.</param>
+        /// <param name="rangeSq">The squared range around the agent.</param>
+        /// <param name="node">The current obstacle k-D node.</param>
         private void queryObstacleTreeRecursive(Agent agent, float rangeSq, ObstacleTreeNode node)
         {
             if (node != null)
@@ -574,21 +536,19 @@ namespace RVO
             }
         }
 
-        /**
-         * <summary>Recursive method for querying the visibility between two
-         * points within a specified radius.</summary>
-         *
-         * <returns>True if q1 and q2 are mutually visible within the radius;
-         * false otherwise.</returns>
-         *
-         * <param name="q1">The first point between which visibility is to be
-         * tested.</param>
-         * <param name="q2">The second point between which visibility is to be
-         * tested.</param>
-         * <param name="radius">The radius within which visibility is to be
-         * tested.</param>
-         * <param name="node">The current obstacle k-D node.</param>
-         */
+        /// <summary>Recursive method for querying the visibility between two
+        /// points within a specified radius.</summary>
+        ///
+        /// <returns>True if q1 and q2 are mutually visible within the radius;
+        /// false otherwise.</returns>
+        ///
+        /// <param name="q1">The first point between which visibility is to be
+        /// tested.</param>
+        /// <param name="q2">The second point between which visibility is to be
+        /// tested.</param>
+        /// <param name="radius">The radius within which visibility is to be
+        /// tested.</param>
+        /// <param name="node">The current obstacle k-D node.</param>
         private bool queryVisibilityRecursive(Vector2 q1, Vector2 q2, float radius, ObstacleTreeNode node)
         {
             if (node == null)

@@ -36,9 +36,7 @@ using System.Collections.Generic;
 
 namespace RVO
 {
-    /**
-     * <summary>Defines an agent in the simulation.</summary>
-     */
+    /// <summary>Defines an agent in the simulation.</summary>
     internal class Agent
     {
         internal IList<KeyValuePair<float, Agent>> _agentNeighbors = new List<KeyValuePair<float, Agent>>();
@@ -57,9 +55,7 @@ namespace RVO
 
         private Vector2 _newVelocity;
 
-        /**
-         * <summary>Computes the neighbors of this agent.</summary>
-         */
+        /// <summary>Computes the neighbors of this agent.</summary>
         internal void computeNeighbors()
         {
             _obstacleNeighbors.Clear();
@@ -76,9 +72,7 @@ namespace RVO
             }
         }
 
-        /**
-         * <summary>Computes the new velocity of this agent.</summary>
-         */
+        /// <summary>Computes the new velocity of this agent.</summary>
         internal void computeNewVelocity()
         {
             _orcaLines.Clear();
@@ -422,13 +416,11 @@ namespace RVO
             }
         }
 
-        /**
-         * <summary>Inserts an agent neighbor into the set of neighbors of this
-         * agent.</summary>
-         *
-         * <param name="agent">A pointer to the agent to be inserted.</param>
-         * <param name="rangeSq">The squared range around this agent.</param>
-         */
+        /// <summary>Inserts an agent neighbor into the set of neighbors of this
+        /// agent.</summary>
+        ///
+        /// <param name="agent">A pointer to the agent to be inserted.</param>
+        /// <param name="rangeSq">The squared range around this agent.</param>
         internal void insertAgentNeighbor(Agent agent, ref float rangeSq)
         {
             if (this != agent)
@@ -460,14 +452,12 @@ namespace RVO
             }
         }
 
-        /**
-         * <summary>Inserts a static obstacle neighbor into the set of neighbors
-         * of this agent.</summary>
-         *
-         * <param name="obstacle">The number of the static obstacle to be
-         * inserted.</param>
-         * <param name="rangeSq">The squared range around this agent.</param>
-         */
+        /// <summary>Inserts a static obstacle neighbor into the set of neighbors
+        /// of this agent.</summary>
+        ///
+        /// <param name="obstacle">The number of the static obstacle to be
+        /// inserted.</param>
+        /// <param name="rangeSq">The squared range around this agent.</param>
         internal void insertObstacleNeighbor(Obstacle obstacle, float rangeSq)
         {
             Obstacle nextObstacle = obstacle._next;
@@ -489,10 +479,8 @@ namespace RVO
             }
         }
 
-        /**
-         * <summary>Updates the two-dimensional position and two-dimensional
-         * velocity of this agent.</summary>
-         */
+        /// <summary>Updates the two-dimensional position and two-dimensional
+        /// velocity of this agent.</summary>
         internal void update()
         {
             _velocity = _newVelocity;
@@ -505,22 +493,20 @@ namespace RVO
             _position += _velocity * Simulator.Instance.TimeStep;
         }
 
-        /**
-         * <summary>Solves a one-dimensional linear program on a specified line
-         * subject to linear constraints defined by lines and a circular
-         * constraint.</summary>
-         *
-         * <returns>True if successful.</returns>
-         *
-         * <param name="lines">Lines defining the linear constraints.</param>
-         * <param name="lineNo">The specified line constraint.</param>
-         * <param name="radius">The radius of the circular constraint.</param>
-         * <param name="optVelocity">The optimization velocity.</param>
-         * <param name="directionOpt">True if the direction should be optimized.
-         * </param>
-         * <param name="result">A reference to the result of the linear program.
-         * </param>
-         */
+        /// <summary>Solves a one-dimensional linear program on a specified line
+        /// subject to linear constraints defined by lines and a circular
+        /// constraint.</summary>
+        ///
+        /// <returns>True if successful.</returns>
+        ///
+        /// <param name="lines">Lines defining the linear constraints.</param>
+        /// <param name="lineNo">The specified line constraint.</param>
+        /// <param name="radius">The radius of the circular constraint.</param>
+        /// <param name="optVelocity">The optimization velocity.</param>
+        /// <param name="directionOpt">True if the direction should be optimized.
+        /// </param>
+        /// <param name="result">A reference to the result of the linear program.
+        /// </param>
         private bool linearProgram1(IList<Line> lines, int lineNo, float radius, Vector2 optVelocity, bool directionOpt, ref Vector2 result)
         {
             float dotProduct = lines[lineNo].point * lines[lineNo].direction;
@@ -607,21 +593,19 @@ namespace RVO
             return true;
         }
 
-        /**
-         * <summary>Solves a two-dimensional linear program subject to linear
-         * constraints defined by lines and a circular constraint.</summary>
-         *
-         * <returns>The number of the line it fails on, and the number of lines
-         * if successful.</returns>
-         *
-         * <param name="lines">Lines defining the linear constraints.</param>
-         * <param name="radius">The radius of the circular constraint.</param>
-         * <param name="optVelocity">The optimization velocity.</param>
-         * <param name="directionOpt">True if the direction should be optimized.
-         * </param>
-         * <param name="result">A reference to the result of the linear program.
-         * </param>
-         */
+        /// <summary>Solves a two-dimensional linear program subject to linear
+        /// constraints defined by lines and a circular constraint.</summary>
+        ///
+        /// <returns>The number of the line it fails on, and the number of lines
+        /// if successful.</returns>
+        ///
+        /// <param name="lines">Lines defining the linear constraints.</param>
+        /// <param name="radius">The radius of the circular constraint.</param>
+        /// <param name="optVelocity">The optimization velocity.</param>
+        /// <param name="directionOpt">True if the direction should be optimized.
+        /// </param>
+        /// <param name="result">A reference to the result of the linear program.
+        /// </param>
         private int linearProgram2(IList<Line> lines, float radius, Vector2 optVelocity, bool directionOpt, ref Vector2 result)
         {
             if (directionOpt)
@@ -661,18 +645,16 @@ namespace RVO
             return lines.Count;
         }
 
-        /**
-         * <summary>Solves a two-dimensional linear program subject to linear
-         * constraints defined by lines and a circular constraint.</summary>
-         *
-         * <param name="lines">Lines defining the linear constraints.</param>
-         * <param name="numObstLines">Count of obstacle lines.</param>
-         * <param name="beginLine">The line on which the 2-d linear program
-         * failed.</param>
-         * <param name="radius">The radius of the circular constraint.</param>
-         * <param name="result">A reference to the result of the linear program.
-         * </param>
-         */
+        /// <summary>Solves a two-dimensional linear program subject to linear
+        /// constraints defined by lines and a circular constraint.</summary>
+        ///
+        /// <param name="lines">Lines defining the linear constraints.</param>
+        /// <param name="numObstLines">Count of obstacle lines.</param>
+        /// <param name="beginLine">The line on which the 2-d linear program
+        /// failed.</param>
+        /// <param name="radius">The radius of the circular constraint.</param>
+        /// <param name="result">A reference to the result of the linear program.
+        /// </param>
         private void linearProgram3(IList<Line> lines, int numObstLines, int beginLine, float radius, ref Vector2 result)
         {
             float distance = 0.0f;

@@ -33,9 +33,7 @@
 
 namespace RVO
 {
-    /**
-     * <summary>Defines a directed line.</summary>
-     */
+    /// <summary>Defines a directed line.</summary>
     public struct Line
     {
         public Vector2 direction;

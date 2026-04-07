@@ -35,53 +35,43 @@ using System;
 
 namespace RVO
 {
-    /**
-     * <summary>Contains functions and constants used in multiple classes.
-     * </summary>
-     */
+    /// <summary>Contains functions and constants used in multiple classes.
+    /// </summary>
     public struct RVOMath
     {
-        /**
-         * <summary>A sufficiently small positive number.</summary>
-         */
+        /// <summary>A sufficiently small positive number.</summary>
         internal const float RVO_EPSILON = 0.00001f;
 
-        /**
-         * <summary>Computes the length of a specified two-dimensional vector.
-         * </summary>
-         *
-         * <param name="vector">The two-dimensional vector whose length is to be
-         * computed.</param>
-         * <returns>The length of the two-dimensional vector.</returns>
-         */
+        /// <summary>Computes the length of a specified two-dimensional vector.
+        /// </summary>
+        ///
+        /// <param name="vector">The two-dimensional vector whose length is to be
+        /// computed.</param>
+        /// <returns>The length of the two-dimensional vector.</returns>
         public static float Abs(Vector2 vector)
         {
             return MathF.Sqrt(AbsSq(vector));
         }
 
-        /**
-         * <summary>Computes the squared length of a specified two-dimensional
-         * vector.</summary>
-         *
-         * <returns>The squared length of the two-dimensional vector.</returns>
-         *
-         * <param name="vector">The two-dimensional vector whose squared length
-         * is to be computed.</param>
-         */
+        /// <summary>Computes the squared length of a specified two-dimensional
+        /// vector.</summary>
+        ///
+        /// <returns>The squared length of the two-dimensional vector.</returns>
+        ///
+        /// <param name="vector">The two-dimensional vector whose squared length
+        /// is to be computed.</param>
         public static float AbsSq(Vector2 vector)
         {
             return vector * vector;
         }
 
-        /**
-         * <summary>Computes the normalization of the specified two-dimensional
-         * vector.</summary>
-         *
-         * <returns>The normalization of the two-dimensional vector.</returns>
-         *
-         * <param name="vector">The two-dimensional vector whose normalization
-         * is to be computed.</param>
-         */
+        /// <summary>Computes the normalization of the specified two-dimensional
+        /// vector.</summary>
+        ///
+        /// <returns>The normalization of the two-dimensional vector.</returns>
+        ///
+        /// <param name="vector">The two-dimensional vector whose normalization
+        /// is to be computed.</param>
         public static Vector2 Normalize(Vector2 vector)
         {
             float length = Abs(vector);
@@ -94,37 +84,33 @@ namespace RVO
             return vector / length;
         }
 
-        /**
-         * <summary>Computes the determinant of a two-dimensional square matrix
-         * with rows consisting of the specified two-dimensional vectors.
-         * </summary>
-         *
-         * <returns>The determinant of the two-dimensional square matrix.
-         * </returns>
-         *
-         * <param name="vector1">The top row of the two-dimensional square
-         * matrix.</param>
-         * <param name="vector2">The bottom row of the two-dimensional square
-         * matrix.</param>
-         */
+        /// <summary>Computes the determinant of a two-dimensional square matrix
+        /// with rows consisting of the specified two-dimensional vectors.
+        /// </summary>
+        ///
+        /// <returns>The determinant of the two-dimensional square matrix.
+        /// </returns>
+        ///
+        /// <param name="vector1">The top row of the two-dimensional square
+        /// matrix.</param>
+        /// <param name="vector2">The bottom row of the two-dimensional square
+        /// matrix.</param>
         internal static float Det(Vector2 vector1, Vector2 vector2)
         {
             return vector1._x * vector2._y - vector1._y * vector2._x;
         }
 
-        /**
-         * <summary>Computes the squared distance from a line segment with the
-         * specified endpoints to a specified point.</summary>
-         *
-         * <returns>The squared distance from the line segment to the point.
-         * </returns>
-         *
-         * <param name="vector1">The first endpoint of the line segment.</param>
-         * <param name="vector2">The second endpoint of the line segment.
-         * </param>
-         * <param name="vector3">The point to which the squared distance is to
-         * be calculated.</param>
-         */
+        /// <summary>Computes the squared distance from a line segment with the
+        /// specified endpoints to a specified point.</summary>
+        ///
+        /// <returns>The squared distance from the line segment to the point.
+        /// </returns>
+        ///
+        /// <param name="vector1">The first endpoint of the line segment.</param>
+        /// <param name="vector2">The second endpoint of the line segment.
+        /// </param>
+        /// <param name="vector3">The point to which the squared distance is to
+        /// be calculated.</param>
         internal static float DistSqPointLineSegment(Vector2 vector1, Vector2 vector2, Vector2 vector3)
         {
             float lengthSq = AbsSq(vector2 - vector1);
@@ -150,21 +136,20 @@ namespace RVO
             return AbsSq(vector3 - (vector1 + r * (vector2 - vector1)));
         }
 
-        /**
-         * <summary>Computes the signed distance from a line connecting the
-         * specified points to a specified point.</summary>
-         *
-         * <returns>Positive when the point c lies to the left of the line ab.
-         * </returns>
-         *
-         * <param name="a">The first point on the line.</param>
-         * <param name="b">The second point on the line.</param>
-         * <param name="c">The point to which the signed distance is to be
-         * calculated.</param>
-         */
+        /// <summary>Computes the signed distance from a line connecting the
+        /// specified points to a specified point.</summary>
+        ///
+        /// <returns>Positive when the point c lies to the left of the line ab.
+        /// </returns>
+        ///
+        /// <param name="a">The first point on the line.</param>
+        /// <param name="b">The second point on the line.</param>
+        /// <param name="c">The point to which the signed distance is to be
+        /// calculated.</param>
         internal static float LeftOf(Vector2 a, Vector2 b, Vector2 c)
         {
             return Det(a - c, b - a);
         }
+
     }
 }
