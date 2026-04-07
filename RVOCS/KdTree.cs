@@ -90,7 +90,7 @@ namespace RVO
              */
             public static bool operator <(FloatPair pair1, FloatPair pair2)
             {
-                return pair1.a_ < pair2.a_ || !(pair2.a_ < pair1.a_) && pair1.b_ < pair2.b_;
+                return pair1.a_ < pair2.a_ || pair1.a_ == pair2.a_ && pair1.b_ < pair2.b_;
             }
 
             /**
@@ -153,6 +153,7 @@ namespace RVO
         /**
          * <summary>The maximum size of an agent k-D tree leaf.</summary>
          */
+        /* Empirically chosen; balances tree depth against per-leaf work. */
         private const int MAX_LEAF_SIZE = 10;
 
         private Agent[] agents_;
