@@ -41,8 +41,8 @@ namespace RVO
      */
     public readonly struct Vector2 : IEquatable<Vector2>
     {
-        internal readonly float x_;
-        internal readonly float y_;
+        internal readonly float _x;
+        internal readonly float _y;
 
         /**
          * <summary>Constructs and initializes a two-dimensional vector from the
@@ -55,8 +55,8 @@ namespace RVO
          */
         public Vector2(float x, float y)
         {
-            x_ = x;
-            y_ = y;
+            _x = x;
+            _y = y;
         }
 
         /**
@@ -66,7 +66,7 @@ namespace RVO
          */
         public override string ToString()
         {
-            return "(" + x_.ToString(CultureInfo.InvariantCulture) + "," + y_.ToString(CultureInfo.InvariantCulture) + ")";
+            return "(" + _x.ToString(CultureInfo.InvariantCulture) + "," + _y.ToString(CultureInfo.InvariantCulture) + ")";
         }
 
         /**
@@ -79,7 +79,7 @@ namespace RVO
          */
         public bool Equals(Vector2 other)
         {
-            return x_ == other.x_ && y_ == other.y_;
+            return _x == other._x && _y == other._y;
         }
 
         /**
@@ -102,7 +102,7 @@ namespace RVO
          */
         public override int GetHashCode()
         {
-            return HashCode.Combine(x_, y_);
+            return HashCode.Combine(_x, _y);
         }
 
         /**
@@ -137,7 +137,7 @@ namespace RVO
          *
          * <value>The x-coordinate of the two-dimensional vector.</value>
          */
-        public float X => x_;
+        public float X => _x;
 
         /**
          * <summary>Gets the y-coordinate of this two-dimensional vector.
@@ -145,7 +145,7 @@ namespace RVO
          *
          * <value>The y-coordinate of the two-dimensional vector.</value>
          */
-        public float Y => y_;
+        public float Y => _y;
 
         /**
          * <summary>Returns the x-coordinate of this two-dimensional vector.
@@ -156,7 +156,7 @@ namespace RVO
         [Obsolete("Use the X property instead.", false)]
         public float x()
         {
-            return x_;
+            return _x;
         }
 
         /**
@@ -168,7 +168,7 @@ namespace RVO
         [Obsolete("Use the Y property instead.", false)]
         public float y()
         {
-            return y_;
+            return _y;
         }
 
         /**
@@ -183,7 +183,7 @@ namespace RVO
          */
         public static float operator *(Vector2 vector1, Vector2 vector2)
         {
-            return vector1.x_ * vector2.x_ + vector1.y_ * vector2.y_;
+            return vector1._x * vector2._x + vector1._y * vector2._y;
         }
 
         /**
@@ -213,7 +213,7 @@ namespace RVO
          */
         public static Vector2 operator *(Vector2 vector, float scalar)
         {
-            return new Vector2(vector.x_ * scalar, vector.y_ * scalar);
+            return new Vector2(vector._x * scalar, vector._y * scalar);
         }
 
         /**
@@ -228,7 +228,7 @@ namespace RVO
          */
         public static Vector2 operator /(Vector2 vector, float scalar)
         {
-            return new Vector2(vector.x_ / scalar, vector.y_ / scalar);
+            return new Vector2(vector._x / scalar, vector._y / scalar);
         }
 
         /**
@@ -243,7 +243,7 @@ namespace RVO
          */
         public static Vector2 operator +(Vector2 vector1, Vector2 vector2)
         {
-            return new Vector2(vector1.x_ + vector2.x_, vector1.y_ + vector2.y_);
+            return new Vector2(vector1._x + vector2._x, vector1._y + vector2._y);
         }
 
         /**
@@ -258,7 +258,7 @@ namespace RVO
          */
         public static Vector2 operator -(Vector2 vector1, Vector2 vector2)
         {
-            return new Vector2(vector1.x_ - vector2.x_, vector1.y_ - vector2.y_);
+            return new Vector2(vector1._x - vector2._x, vector1._y - vector2._y);
         }
 
         /**
@@ -272,7 +272,7 @@ namespace RVO
          */
         public static Vector2 operator -(Vector2 vector)
         {
-            return new Vector2(-vector.x_, -vector.y_);
+            return new Vector2(-vector._x, -vector._y);
         }
     }
 }

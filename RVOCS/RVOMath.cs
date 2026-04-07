@@ -109,7 +109,7 @@ namespace RVO
          */
         internal static float Det(Vector2 vector1, Vector2 vector2)
         {
-            return vector1.x_ * vector2.y_ - vector1.y_ * vector2.x_;
+            return vector1._x * vector2._y - vector1._y * vector2._x;
         }
 
         /**

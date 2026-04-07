@@ -39,11 +39,11 @@ namespace RVO
     internal class Obstacle
     {
 
-        internal Obstacle next_;
-        internal Obstacle previous_;
-        internal Vector2 direction_;
-        internal Vector2 point_;
-        internal int id_;
-        internal bool convex_;
+        internal Obstacle _next;
+        internal Obstacle _previous;
+        internal Vector2 _direction;
+        internal Vector2 _point;
+        internal int _id;
+        internal bool _convex;
     }
 }
