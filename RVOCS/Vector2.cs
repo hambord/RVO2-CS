@@ -60,7 +60,7 @@ namespace RVO
         /// <returns>The string representation of this vector.</returns>
         public override string ToString()
         {
-            return "(" + _x.ToString(CultureInfo.InvariantCulture) + "," + _y.ToString(CultureInfo.InvariantCulture) + ")";
+            return $"({_x.ToString(CultureInfo.InvariantCulture)},{_y.ToString(CultureInfo.InvariantCulture)})";
         }
 
         /// <summary>Returns true if this vector equals the specified vector.
