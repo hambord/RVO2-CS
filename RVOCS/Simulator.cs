@@ -116,7 +116,7 @@ namespace RVO
         /// agent.</param>
         public int AddAgent(Vector2 position)
         {
-            if (_defaultAgent == null)
+            if (_defaultAgent is null)
             {
                 return -1;
             }
@@ -345,7 +345,7 @@ namespace RVO
         /// <returns>The global time after the simulation step.</returns>
         public float DoStep()
         {
-            if (_workers == null)
+            if (_workers is null)
             {
                 _workers = new Worker[_numWorkers];
                 _doneEvents = new ManualResetEvent[_workers.Length];
@@ -1098,7 +1098,7 @@ namespace RVO
             ArgumentOutOfRangeException.ThrowIfNegative(radius, nameof(radius));
             ArgumentOutOfRangeException.ThrowIfNegative(maxSpeed, nameof(maxSpeed));
 
-            if (_defaultAgent == null)
+            if (_defaultAgent is null)
             {
                 _defaultAgent = new Agent();
             }

@@ -143,7 +143,7 @@ namespace RVO
         /// <summary>Builds an agent k-D tree.</summary>
         internal void buildAgentTree()
         {
-            if (_agents == null || _agents.Length != Simulator.Instance._agents.Count)
+            if (_agents is null || _agents.Length != Simulator.Instance._agents.Count)
             {
                 _agents = new Agent[Simulator.Instance._agents.Count];
 
@@ -508,7 +508,7 @@ namespace RVO
         /// <param name="node">The current obstacle k-D node.</param>
         private void queryObstacleTreeRecursive(Agent agent, float rangeSq, ObstacleTreeNode node)
         {
-            if (node != null)
+            if (node is not null)
             {
                 Obstacle obstacle1 = node._obstacle;
                 Obstacle obstacle2 = obstacle1._next;
@@ -551,7 +551,7 @@ namespace RVO
         /// <param name="node">The current obstacle k-D node.</param>
         private bool queryVisibilityRecursive(Vector2 q1, Vector2 q2, float radius, ObstacleTreeNode node)
         {
-            if (node == null)
+            if (node is null)
             {
                 return true;
             }
