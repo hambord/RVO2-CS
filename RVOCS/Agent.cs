@@ -408,7 +408,7 @@ namespace RVO
                 _orcaLines.Add(line);
             }
 
-            int lineFail = LinearProgram2(_orcaLines, _maxSpeed, _prefVelocity, false, ref _newVelocity);
+            int lineFail = LinearProgram2(_orcaLines, _maxSpeed, _prefVelocity, false, out _newVelocity);
 
             if (lineFail < _orcaLines.Count)
             {
@@ -606,7 +606,7 @@ namespace RVO
         /// </param>
         /// <param name="result">A reference to the result of the linear program.
         /// </param>
-        private int LinearProgram2(IList<Line> lines, float radius, Vector2 optVelocity, bool directionOpt, ref Vector2 result)
+        private int LinearProgram2(IList<Line> lines, float radius, Vector2 optVelocity, bool directionOpt, out Vector2 result)
         {
             if (directionOpt)
             {
@@ -700,7 +700,7 @@ namespace RVO
                     }
 
                     Vector2 tempResult = result;
-                    if (LinearProgram2(projLines, radius, new Vector2(-lines[i].Direction.Y, lines[i].Direction.X), true, ref result) < projLines.Count)
+                    if (LinearProgram2(projLines, radius, new Vector2(-lines[i].Direction.Y, lines[i].Direction.X), true, out result) < projLines.Count)
                     {
                         /*
                          * This should in principle not happen. The result is by
