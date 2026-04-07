@@ -33,57 +33,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading;
+using System.Threading.Tasks;
 
 namespace RVO
 {
     /// <summary>Defines the simulation.</summary>
     public class Simulator
     {
-        /// <summary>Defines a worker.</summary>
-        private class Worker
-        {
-            private readonly ManualResetEvent _doneEvent;
-            private readonly int _end;
-            private readonly int _start;
-
-            /// <summary>Constructs and initializes a worker.</summary>
-            ///
-            /// <param name="start">Start.</param>
-            /// <param name="end">End.</param>
-            /// <param name="doneEvent">Done event.</param>
-            internal Worker(int start, int end, ManualResetEvent doneEvent)
-            {
-                _start = start;
-                _end = end;
-                _doneEvent = doneEvent;
-            }
-
-            /// <summary>Performs a simulation step.</summary>
-            internal void step(object _)
-            {
-                for (int agentNo = _start; agentNo < _end; ++agentNo)
-                {
-                    Simulator.Instance._agents[agentNo].computeNeighbors();
-                    Simulator.Instance._agents[agentNo].computeNewVelocity();
-                }
-
-                _doneEvent.Set();
-            }
-
-            /// <summary>updates the two-dimensional position and
-            /// two-dimensional velocity of each agent.</summary>
-            internal void update(object _)
-            {
-                for (int agentNo = _start; agentNo < _end; ++agentNo)
-                {
-                    Simulator.Instance._agents[agentNo].update();
-                }
-
-                _doneEvent.Set();
-            }
-        }
-
         internal IList<Agent> _agents;
         internal IList<Obstacle> _obstacles;
         internal KdTree _kdTree;
@@ -92,8 +48,6 @@ namespace RVO
         private static readonly Simulator _instance = new();
 
         private Agent _defaultAgent;
-        private ManualResetEvent[] _doneEvents;
-        private Worker[] _workers;
         private int _numWorkers;
         private float _globalTime;
         private bool _obstaclesProcessed;
@@ -345,35 +299,17 @@ namespace RVO
         /// <returns>The global time after the simulation step.</returns>
         public float DoStep()
         {
-            if (_workers is null)
-            {
-                _workers = new Worker[_numWorkers];
-                _doneEvents = new ManualResetEvent[_workers.Length];
-
-                for (int block = 0; block < _workers.Length; ++block)
-                {
-                    _doneEvents[block] = new ManualResetEvent(false);
-                    _workers[block] = new Worker(block * NumAgents / _workers.Length, (block + 1) * NumAgents / _workers.Length, _doneEvents[block]);
-                }
-            }
+            ParallelOptions options = new() { MaxDegreeOfParallelism = _numWorkers };
 
             _kdTree.buildAgentTree();
 
-            for (int block = 0; block < _workers.Length; ++block)
+            Parallel.For(0, _agents.Count, options, i =>
             {
-                _doneEvents[block].Reset();
-                ThreadPool.QueueUserWorkItem(_workers[block].step);
-            }
+                _agents[i].computeNeighbors();
+                _agents[i].computeNewVelocity();
+            });
 
-            WaitHandle.WaitAll(_doneEvents);
-
-            for (int block = 0; block < _workers.Length; ++block)
-            {
-                _doneEvents[block].Reset();
-                ThreadPool.QueueUserWorkItem(_workers[block].update);
-            }
-
-            WaitHandle.WaitAll(_doneEvents);
+            Parallel.For(0, _agents.Count, options, i => _agents[i].update());
 
             _globalTime += _timeStep;
 
@@ -858,24 +794,15 @@ namespace RVO
             return NumObstacleVertices;
         }
 
-        /// <summary>Gets or sets the count of workers.</summary>
+        /// <summary>Gets or sets the maximum degree of parallelism for the
+        /// simulation step.</summary>
         ///
-        /// <value>The count of workers. A value of zero or less uses the number
-        /// of available thread pool threads.</value>
+        /// <value>The maximum number of concurrent tasks used during DoStep. A
+        /// value of zero or less imposes no limit.</value>
         public int NumWorkers
         {
             get => _numWorkers;
-            set
-            {
-                _numWorkers = value;
-
-                if (_numWorkers <= 0)
-                {
-                    ThreadPool.GetMinThreads(out _numWorkers, out _);
-                }
-
-                _workers = null;
-            }
+            set => _numWorkers = value <= 0 ? -1 : value;
         }
 
         /// <summary>Returns the two-dimensional position of a specified obstacle
